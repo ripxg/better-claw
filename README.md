@@ -1,4 +1,4 @@
-# Better Claw 🦉
+# Better Claw 🦞
 
 **Make your AI agent better every day.**
 

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Better Claw 🦞 - OpenClaw Cron Job Library</title>
+  <style>
+    :root {
+      --primary: #FF5A36;
+      --bg: #0a1720;
+      --surface: #0e231f;
+      --text: #c9eadc;
+      --muted: #8ab8aa;
+      --accent: #5fdfa2;
+      --border: #6fbfa8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Fragment Mono', 'Courier New', monospace;
+      background: linear-gradient(135deg, var(--bg) 0%, #051a14 100%);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      text-align: center;
+      padding: 3rem 0;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .hero {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s;
+      border: 2px solid var(--border);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #ff7b63;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .btn-secondary:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .quick-start {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: 12px;
+      border-left: 4px solid var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    .quick-start h2 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .quick-start code {
+      background: var(--bg);
+      padding: 1rem;
+      border-radius: 6px;
+      display: block;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    .categories {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .category {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+    }
+
+    .category h2 {
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .category-desc {
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .jobs {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .job {
+      background: var(--bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--muted);
+      transition: all 0.3s;
+    }
+
+    .job.recommended {
+      border-left-color: var(--accent);
+    }
+
+    .job:hover {
+      transform: translateX(4px);
+      border-left-width: 6px;
+    }
+
+    .job h3 {
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .job-meta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+    }
+
+    .badge-recommended {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .badge-schedule {
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .badge-difficulty {
+      background: var(--muted);
+      color: var(--bg);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+      border-top: 2px solid var(--border);
+      color: var(--muted);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 4rem;
+      color: var(--muted);
+    }
+
+    .error {
+      background: #ff4f40;
+      color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 2rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Better Claw 🦞</h1>
+      <p class="subtitle">Make your AI agent better every day</p>
+      <p>A curated library of OpenClaw cron jobs for continuous self-improvement</p>
+    </header>
+
+    <div class="hero">
+      <h2>🎯 What is Better Claw?</h2>
+      <p>Better Claw is a collection of ready-to-use cron jobs that help your OpenClaw agent:</p>
+      <ul style="margin: 1rem 0 1rem 2rem;">
+        <li>Learn from patterns and adapt to your workflow</li>
+        <li>Stay accountable with regular check-ins and reports</li>
+        <li>Maintain health by catching issues early</li>
+        <li>Discover new capabilities gradually</li>
+      </ul>
+      <div class="cta-buttons">
+        <a href="https://github.com/ripxg/better-claw" class="btn btn-primary">📦 View on GitHub</a>
+        <a href="https://docs.openclaw.ai" class="btn btn-secondary">📖 OpenClaw Docs</a>
+      </div>
+    </div>
+
+    <div class="quick-start">
+      <h2>🚀 Quick Start</h2>
+      <p>Get started in 3 easy steps:</p>
+      <code>
+# 1. Clone the repository
+git clone https://github.com/ripxg/better-claw.git
+cd better-claw
+
+# 2. Import recommended starter jobs (all disabled by default)
+./scripts/import-recommended.sh
+
+# 3. Review and enable jobs
+openclaw cron list --include-disabled
+openclaw cron update --job-id &lt;id&gt; --patch '{"enabled": true}'
+      </code>
+      <p style="margin-top: 1rem;">📝 <strong>Note:</strong> All jobs are disabled by default. You choose what to enable.</p>
+    </div>
+
+    <h2 style="text-align: center; margin-bottom: 2rem; color: var(--accent);">📚 Job Categories</h2>
+    
+    <div id="categories" class="categories">
+      <div class="loading">Loading jobs...</div>
+    </div>
+
+    <footer>
+      <p>Built on <a href="https://github.com/openclaw/openclaw" style="color: var(--accent);">OpenClaw</a></p>
+      <p style="margin-top: 0.5rem;">Created by <a href="https://github.com/ripxg" style="color: var(--accent);">@ripxg</a></p>
+    </footer>
+  </div>
+
+  <script>
+    async function loadJobs() {
+      const categoriesEl = document.getElementById('categories');
+      
+      try {
+        const response = await fetch('manifest.json');
+        if (!response.ok) throw new Error('Failed to load manifest.json');
+        
+        const data = await response.json();
+        
+        categoriesEl.innerHTML = data.categories.map(category => `
+          <div class="category">
+            <h2>${category.name}</h2>
+            <p class="category-desc">${category.description}</p>
+            <div class="jobs">
+              ${category.jobs.map(job => `
+                <div class="job ${job.recommended ? 'recommended' : ''}">
+                  <h3>${job.name}</h3>
+                  <p>${job.description}</p>
+                  <div class="job-meta">
+                    ${job.recommended ? '<span class="badge badge-recommended">⭐ Recommended</span>' : ''}
+                    <span class="badge badge-schedule">📅 ${job.schedule}</span>
+                    <span class="badge badge-difficulty">🎓 ${job.difficulty}</span>
+                  </div>
+                  <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--muted);">
+                    📄 <code>${job.file}</code>
+                  </p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `).join('');
+      } catch (error) {
+        categoriesEl.innerHTML = `
+          <div class="error">
+            ❌ Error loading jobs: ${error.message}
+            <br><br>
+            Make sure manifest.json is accessible from this location.
+          </div>
+        `;
+      }
+    }
+
+    // Load jobs when page loads
+    loadJobs();
+  </script>
+</body>
+</html>
