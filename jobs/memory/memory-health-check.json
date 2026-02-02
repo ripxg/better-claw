@@ -1,0 +1,48 @@
+{
+  "name": "Memory Health Check",
+  "description": "Detect stale, contradictory, or duplicate memories that need cleanup",
+  "enabled": false,
+  "schedule": {
+    "kind": "cron",
+    "expr": "0 10 * * 6",
+    "tz": "UTC",
+    "rationale": "Weekly Saturday morning check gives time to clean up before the new week"
+  },
+  "sessionTarget": "isolated",
+  "wakeMode": "next-heartbeat",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Run memory health check.\n\n1. Search for potential duplicates:\n   - Similar entries about the same topic\n   - Repeated information across daily logs\n\n2. Identify contradictions:\n   - Conflicting preferences or facts\n   - Outdated information that's been updated\n\n3. Find stale entries:\n   - References to completed projects\n   - Temporary notes that are no longer relevant\n   - Very old daily logs (60+ days) not consolidated\n\n4. Report findings:\n   - 📊 Stats: Total memories, duplicates found, contradictions, stale items\n   - 🔍 Top 3-5 issues requiring attention\n   - 💡 Suggested cleanup actions\n\nKeep report under 1000 chars. Be specific about which memories to review.",
+    "timeoutSeconds": 300,
+    "deliver": true,
+    "channel": "telegram"
+  },
+  "isolation": {
+    "postToMainPrefix": "Memory Health",
+    "postToMainMode": "summary",
+    "postToMainMaxChars": 8000
+  },
+  "configuration": {
+    "schedule": "Weekly is recommended. Adjust day/time to your preference.",
+    "delivery": "Delivers to Telegram by default. Change to 'discord', 'slack', or remove deliver:true for main session only",
+    "threshold": "Modify the 60+ days threshold based on your memory retention preferences",
+    "auto_cleanup": "This job only reports issues. Create a follow-up job for automated cleanup if desired."
+  },
+  "category": "memory",
+  "requiredCapabilities": [
+    "memory_search tool",
+    "memory_get tool",
+    "Read access to MEMORY.md and memory/*.md files"
+  ],
+  "estimatedDuration": "2-5 minutes depending on memory size",
+  "recommendedFor": [
+    "Users with 30+ days of memory history",
+    "Heavy users with daily logs",
+    "Anyone experiencing context issues or confusion"
+  ],
+  "tips": [
+    "Run this job for a few weeks to establish a baseline before enabling auto-cleanup",
+    "Review the suggestions before acting - some 'duplicates' might be intentional reinforcement",
+    "Pair with memory-consolidation job for best results"
+  ]
+}

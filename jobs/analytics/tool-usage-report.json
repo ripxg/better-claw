@@ -1,0 +1,51 @@
+{
+  "name": "Tool Usage Report",
+  "description": "Monthly report on which OpenClaw tools are used most/least, with optimization suggestions",
+  "enabled": false,
+  "schedule": {
+    "kind": "cron",
+    "expr": "0 10 1 * *",
+    "tz": "UTC",
+    "rationale": "First day of month - natural boundary for monthly review"
+  },
+  "sessionTarget": "isolated",
+  "wakeMode": "next-heartbeat",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Generate monthly tool usage report.\n\nAnalyze the past 30 days of session logs:\n\n## 🔧 Most Used Tools (Top 10)\n1. [tool name]: [usage count] ([% of total])\n2. [tool name]: [usage count]\n...\n\n## 💤 Underutilized Tools\nTools available but rarely/never used:\n- [tool name]: [last used: X days ago or never]\n- [tool name]: [potential use case]\n\n## 📈 Trends vs Last Month\n- [tool]: +X% (explanation if significant)\n- [tool]: -X% (explanation if significant)\n\n## 💡 Optimization Opportunities\n1. **Overused**: [tool that might indicate inefficiency]\n   - Why: [pattern analysis]\n   - Suggest: [alternative approach]\n\n2. **Underused**: [tool that could add value]\n   - Why: [barrier to adoption]\n   - Suggest: [use case to try]\n\n## 🎯 Tool Health\n- Success rate: [%] ([vs. last month])\n- Errors/retries: [count] (common issues)\n\nKeep under 1000 chars. Focus on actionable insights.",
+    "timeoutSeconds": 300,
+    "deliver": true,
+    "channel": "telegram"
+  },
+  "configuration": {
+    "schedule": "Monthly (1st of month). Quarterly (*/3) if preferred.",
+    "data_source": "Session logs - requires access to tool call history",
+    "analysis_depth": "30 days default. Adjust in prompt for different windows.",
+    "delivery": "Telegram by default. Change to preferred channel or main session."
+  },
+  "category": "analytics",
+  "requiredCapabilities": [
+    "Session history access",
+    "Tool call log analysis",
+    "Messaging channel (optional)"
+  ],
+  "estimatedDuration": "2-4 minutes",
+  "recommendedFor": [
+    "Power users optimizing workflows",
+    "Users wanting to maximize OpenClaw value",
+    "Teams training agents on tool selection"
+  ],
+  "insights": [
+    "Identify overreliance on expensive tools",
+    "Discover underutilized capabilities",
+    "Track adoption of new tools",
+    "Optimize workflow efficiency",
+    "Detect tool usage anti-patterns"
+  ],
+  "tips": [
+    "Pair with tool-discovery to systematically adopt underused tools",
+    "Track trends across multiple months to identify seasonal patterns",
+    "Use to justify OpenClaw subscription tiers (if applicable)",
+    "Share with team to standardize tool usage patterns"
+  ]
+}

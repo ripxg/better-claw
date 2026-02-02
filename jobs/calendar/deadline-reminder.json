@@ -1,0 +1,55 @@
+{
+  "name": "Deadline Reminder",
+  "description": "Proactive alerts for approaching deadlines at 3 days, 1 day, and day-of",
+  "enabled": false,
+  "schedule": {
+    "kind": "every",
+    "everyMs": 21600000,
+    "rationale": "Every 6 hours ensures timely deadline detection"
+  },
+  "sessionTarget": "isolated",
+  "wakeMode": "next-heartbeat",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Check for upcoming deadlines.\n\nSources to check:\n1. Project README files (look for \"deadline:\", \"due:\", \"launch:\")\n2. GitHub issues with due dates\n3. PRs with requested review deadlines\n4. Memory files with deadline mentions\n5. Cron jobs scheduled to run soon\n\nAlert thresholds:\n- 🔴 **Today**: Immediate alert\n- 🟡 **Tomorrow**: High priority\n- 📅 **3 days**: Heads up\n\nFor each deadline:\n```\n[Emoji] [Project/Task]\nDue: [Date/Time]\nWhat: [Description]\nAction: [What needs doing]\n```\n\nOnly send if deadlines found. Group by urgency.\n\nKeep under 800 chars total.",
+    "timeoutSeconds": 180,
+    "deliver": true,
+    "channel": "telegram"
+  },
+  "configuration": {
+    "schedule": "Every 6 hours. Adjust for more/less frequent checks.",
+    "sources": "Customize sources in prompt based on where you track deadlines",
+    "thresholds": "Default: 3 days, 1 day, same day. Adjust to preference.",
+    "delivery": "Telegram by default. Only sends when deadlines detected.",
+    "quiet_hours": "Consider adding time-based filtering to avoid late-night alerts"
+  },
+  "category": "calendar",
+  "requiredCapabilities": [
+    "File system access for README/docs",
+    "GitHub CLI for issues/PRs (optional)",
+    "Memory search for deadline mentions",
+    "Messaging channel"
+  ],
+  "estimatedDuration": "1-2 minutes",
+  "recommendedFor": [
+    "Anyone managing projects with deadlines",
+    "Teams with milestone-driven work",
+    "Forgetful people (no judgment!)"
+  ],
+  "deadlineFormats": [
+    "README.md: 'Deadline: 2024-12-31'",
+    "GitHub issues: due_date field",
+    "Memory: 'due by [date]' or 'deadline [date]'",
+    "Comments: '// TODO: finish by YYYY-MM-DD'"
+  ],
+  "tips": [
+    "Standardize deadline format in your projects for easier detection",
+    "Pair with daily-agenda for comprehensive calendar awareness",
+    "Consider separate job for different deadline types (releases vs tasks)",
+    "Use memory files to track informal deadlines"
+  ],
+  "relatedJobs": [
+    "daily-agenda: Morning overview including deadlines",
+    "project-owner: Project-specific health including timeline"
+  ]
+}

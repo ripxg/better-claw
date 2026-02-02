@@ -1,0 +1,54 @@
+{
+  "name": "Communication Audit",
+  "description": "Weekly review of message clarity, response quality, and communication effectiveness",
+  "enabled": false,
+  "schedule": {
+    "kind": "cron",
+    "expr": "0 17 * * 5",
+    "tz": "UTC",
+    "rationale": "Friday 5pm - end of work week is natural time for communication review"
+  },
+  "sessionTarget": "isolated",
+  "wakeMode": "next-heartbeat",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Run weekly communication audit.\n\nAnalyze the past week's interactions:\n\n## 📝 Message Clarity\n- Count messages requiring clarification/follow-up\n- Identify ambiguous responses\n- Spot patterns in miscommunication\n\n## ⚡ Response Quality\n- Average response time\n- Completeness of answers\n- Proactive suggestions offered\n\n## 🎯 Effectiveness Metrics\n- Tasks completed first try vs. iterations\n- User satisfaction indicators (thanks, positive feedback)\n- Times user corrected agent understanding\n\n## 🔍 Patterns Identified\n- Topics where communication breaks down\n- Time-of-day correlation with quality\n- Message length vs. clarity\n\n## 💡 Improvement Recommendations\n- Top 2-3 specific changes to make\n- Communication anti-patterns to avoid\n- Successful patterns to reinforce\n\nReport format:\n```\n📊 Communication Audit - Week of [date]\n\nClarity: [score/10] ([trend])\nQuality: [score/10] ([trend])\nEffectiveness: [score/10] ([trend])\n\nKey Issues:\n- [Issue 1]\n- [Issue 2]\n\nRecommendations:\n1. [Action item]\n2. [Action item]\n```\n\nKeep under 800 chars. Focus on actionable improvements.",
+    "timeoutSeconds": 240,
+    "deliver": false
+  },
+  "isolation": {
+    "postToMainPrefix": "Communication Audit",
+    "postToMainMode": "full"
+  },
+  "configuration": {
+    "schedule": "Weekly Friday. Adjust to match your review cycle.",
+    "metrics": "Customize metrics based on what matters to your workflow",
+    "delivery": "Posts to main session by default. Enable deliver:true for Telegram/Discord.",
+    "scoring": "Subjective 1-10 scores. Agent estimates based on interaction patterns."
+  },
+  "category": "feedback",
+  "requiredCapabilities": [
+    "Session history access",
+    "Message log analysis",
+    "Pattern recognition"
+  ],
+  "estimatedDuration": "3-5 minutes",
+  "recommendedFor": [
+    "Users wanting to optimize agent communication",
+    "Teams training agents for specific workflows",
+    "Anyone experiencing frequent miscommunication"
+  ],
+  "tips": [
+    "Pair with daily-workflow-feedback for daily + weekly coverage",
+    "Track scores over multiple weeks to measure improvement",
+    "Share audit results with team if using OpenClaw collaboratively",
+    "Use recommendations to update SOUL.md communication guidelines"
+  ],
+  "metrics": [
+    "Messages requiring clarification",
+    "Response completeness",
+    "Task completion efficiency",
+    "Positive feedback frequency",
+    "Communication pattern trends"
+  ]
+}

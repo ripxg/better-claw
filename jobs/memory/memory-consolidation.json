@@ -1,0 +1,50 @@
+{
+  "name": "Memory Consolidation",
+  "description": "Review recent daily logs and suggest updates to MEMORY.md",
+  "enabled": false,
+  "schedule": {
+    "kind": "every",
+    "everyMs": 259200000,
+    "rationale": "Every 3 days balances freshness with not overwhelming with updates"
+  },
+  "sessionTarget": "isolated",
+  "wakeMode": "next-heartbeat",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Memory consolidation check.\n\nReview the last 3 days of memory/YYYY-MM-DD.md files.\n\nIdentify:\n1. **Significant events** worth adding to MEMORY.md\n   - Important decisions made\n   - New preferences discovered\n   - Lessons learned\n   - Major accomplishments\n\n2. **Outdated info in MEMORY.md** that should be updated\n   - Completed projects\n   - Changed preferences\n   - Resolved issues\n\n3. **Contradictions** between daily logs and MEMORY.md\n   - Conflicting information\n   - Stale context\n\nProvide:\n- 📝 **Suggested additions**: [2-3 items with proposed text]\n- 🔄 **Suggested updates**: [Items to change]\n- ❌ **Suggested removals**: [Outdated content]\n\nDon't auto-update MEMORY.md - provide suggestions for user to review.\n\nKeep under 1000 chars. Be specific about line numbers or sections.",
+    "timeoutSeconds": 240,
+    "deliver": false
+  },
+  "isolation": {
+    "postToMainPrefix": "Memory Consolidation",
+    "postToMainMode": "full"
+  },
+  "configuration": {
+    "schedule": "Every 3 days. Weekly (604800000) works for slower pace.",
+    "review_window": "Default: last 3 days. Adjust in prompt for different window.",
+    "auto_update": "Disabled by default. Agent suggests, you decide.",
+    "delivery": "Posts to main session for review. Enable deliver:true for Telegram/Discord."
+  },
+  "category": "memory",
+  "requiredCapabilities": [
+    "memory_search",
+    "memory_get",
+    "Read access to memory/*.md and MEMORY.md"
+  ],
+  "estimatedDuration": "2-4 minutes",
+  "recommendedFor": [
+    "Active users with daily logs",
+    "Anyone maintaining MEMORY.md",
+    "Long-term users (30+ days) with accumulating context"
+  ],
+  "tips": [
+    "Review suggestions before applying - not everything belongs in long-term memory",
+    "Pair with memory-health-check for comprehensive memory maintenance",
+    "Consider enabling auto-update after testing suggestions for a few weeks",
+    "Use this as a forcing function to keep MEMORY.md current"
+  ],
+  "relatedJobs": [
+    "memory-health-check: Detect duplicates and contradictions",
+    "weekly-reflection: Higher-level review of accomplishments"
+  ]
+}

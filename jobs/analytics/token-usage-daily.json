@@ -1,0 +1,47 @@
+{
+  "name": "Daily Token Usage Report",
+  "description": "Generate daily token usage report with hourly breakdown and cost estimates",
+  "enabled": false,
+  "schedule": {
+    "kind": "cron",
+    "expr": "0 20 * * *",
+    "tz": "Europe/Berlin",
+    "rationale": "Evening report (8pm) provides full day's usage before end of day"
+  },
+  "sessionTarget": "isolated",
+  "wakeMode": "next-heartbeat",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "@/home/ubuntu/clawd/tools/daily-token-report.py --send-telegram\n\nGenerate daily token usage report with hourly breakdown for last 24 hours. Send to Telegram.",
+    "timeoutSeconds": 300,
+    "channel": "telegram"
+  },
+  "isolation": {
+    "postToMainPrefix": "Cron",
+    "postToMainMode": "summary",
+    "postToMainMaxChars": 8000
+  },
+  "configuration": {
+    "schedule": "Adjust 'tz' to your local timezone and 'expr' to preferred reporting time",
+    "delivery": "Requires Telegram configured. Change 'channel' to 'discord', 'slack', etc. as needed",
+    "script": "Requires daily-token-report.py script in tools directory (not included in this library)",
+    "customization": "Modify script path and arguments to match your setup"
+  },
+  "category": "analytics",
+  "requiredCapabilities": [
+    "Isolated session",
+    "Python script access",
+    "Messaging channel (Telegram/Discord/Slack)"
+  ],
+  "estimatedDuration": "30-60 seconds",
+  "recommendedFor": [
+    "Cost-conscious users",
+    "Teams tracking API usage",
+    "Users optimizing model selection"
+  ],
+  "notes": [
+    "This job references a custom Python script not included in this library",
+    "You'll need to implement your own token tracking script or use OpenClaw's built-in session_status",
+    "Consider creating a simpler version using session_status tool instead of external script"
+  ]
+}

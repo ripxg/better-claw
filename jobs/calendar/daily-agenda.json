@@ -1,0 +1,52 @@
+{
+  "name": "Daily Agenda",
+  "description": "Morning summary of today's calendar events, deadlines, and time-sensitive tasks",
+  "enabled": false,
+  "schedule": {
+    "kind": "cron",
+    "expr": "0 8 * * *",
+    "tz": "America/New_York",
+    "rationale": "8am local time - early enough to plan the day, late enough that you're awake"
+  },
+  "sessionTarget": "isolated",
+  "wakeMode": "now",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Generate daily agenda for today.\n\nCheck:\n1. Calendar events (if integrated)\n2. Project deadlines in tracked repos (README, docs, PRs)\n3. Follow-up items from yesterday's memory\n4. Scheduled cron jobs that will fire today\n\nReport format:\n```\n📅 [Day, Date]\n\n⏰ Events:\n- [Time]: [Event] ([Duration])\n- [Time]: [Event]\n\n📌 Deadlines:\n- [Project]: [What's due]\n\n✅ Follow-ups:\n- [Item from yesterday]\n\n🤖 Scheduled Jobs:\n- [Time]: [Job name]\n```\n\nKeep under 600 chars. If nothing scheduled, just say \"Clear day - no events or deadlines.\"\n\nDeliver to Telegram/Discord for morning reading.",
+    "timeoutSeconds": 120,
+    "deliver": true,
+    "channel": "telegram"
+  },
+  "configuration": {
+    "schedule": "8am local time. Adjust 'tz' and 'expr' to your wake-up time",
+    "calendar_integration": "Requires calendar access (not enabled by default in OpenClaw)",
+    "fallback": "Without calendar, checks project deadlines and memory for context",
+    "delivery": "Morning notification to your preferred channel",
+    "timezone": "CRITICAL: Set 'tz' to your local timezone for accurate timing"
+  },
+  "category": "calendar",
+  "requiredCapabilities": [
+    "Memory read access",
+    "Git/project file access",
+    "Calendar integration (optional but recommended)",
+    "Messaging channel"
+  ],
+  "estimatedDuration": "30-60 seconds",
+  "recommendedFor": [
+    "Busy professionals with many commitments",
+    "Anyone who forgets meetings",
+    "Remote workers needing structure"
+  ],
+  "tips": [
+    "Pair with deadline-reminder for proactive alerts",
+    "Adjust timing to match your morning routine",
+    "Use with time-zone-aware-standups if you travel frequently",
+    "Consider separate weekend schedule (weekends-only variant)"
+  ],
+  "calendarSources": [
+    "Google Calendar API (requires setup)",
+    "Outlook/Exchange (requires setup)",
+    "Project-based: README deadlines, PR review requests",
+    "Memory-based: Tasks from previous day's notes"
+  ]
+}

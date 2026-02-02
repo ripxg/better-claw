@@ -1,0 +1,246 @@
+{
+  "name": "Better Claw Job Library",
+  "version": "1.0.0",
+  "description": "Curated library of OpenClaw cron jobs for continuous self-improvement",
+  "repository": "https://github.com/ripxg/better-claw",
+  "categories": [
+    {
+      "id": "feedback",
+      "name": "Feedback & Learning",
+      "description": "Jobs that help your agent learn from experience and improve communication",
+      "jobs": [
+        {
+          "id": "daily-workflow-feedback",
+          "name": "Daily Workflow Feedback Loop",
+          "file": "jobs/feedback/daily-workflow-feedback.json",
+          "description": "Daily reflection on communication patterns and process improvements",
+          "schedule": "Daily @ 3pm UTC",
+          "difficulty": "beginner",
+          "recommended": true
+        },
+        {
+          "id": "weekly-reflection",
+          "name": "Weekly Reflection",
+          "file": "jobs/feedback/weekly-reflection.json",
+          "description": "End-of-week summary of accomplishments, lessons learned, and goals",
+          "schedule": "Weekly Sunday @ 6pm UTC",
+          "difficulty": "beginner",
+          "recommended": true
+        },
+        {
+          "id": "learning-preference-calibration",
+          "name": "Learning Preference Calibration",
+          "file": "jobs/feedback/learning-preference-calibration.json",
+          "description": "Monthly check-in on how agent should adapt to your communication style",
+          "schedule": "Monthly 1st @ 2pm UTC",
+          "difficulty": "beginner",
+          "recommended": true
+        },
+        {
+          "id": "communication-audit",
+          "name": "Communication Audit",
+          "file": "jobs/feedback/communication-audit.json",
+          "description": "Weekly review of message clarity and response quality",
+          "schedule": "Weekly Friday @ 5pm UTC",
+          "difficulty": "intermediate",
+          "recommended": false
+        }
+      ]
+    },
+    {
+      "id": "analytics",
+      "name": "Usage & Analytics",
+      "description": "Jobs that track resource usage and provide insights",
+      "jobs": [
+        {
+          "id": "token-usage-daily",
+          "name": "Daily Token Usage Report",
+          "file": "jobs/analytics/token-usage-daily.json",
+          "description": "Daily token usage report with hourly breakdown and cost estimates",
+          "schedule": "Daily @ 8pm local",
+          "difficulty": "intermediate",
+          "recommended": true,
+          "requires": ["Custom Python script", "Messaging channel"]
+        },
+        {
+          "id": "session-summary",
+          "name": "Weekly Session Summary",
+          "file": "jobs/analytics/session-summary.json",
+          "description": "Weekly summary of session activity, spawned agents, and costs",
+          "schedule": "Weekly Sunday @ 9pm UTC",
+          "difficulty": "intermediate",
+          "recommended": false
+        },
+        {
+          "id": "tool-usage-report",
+          "name": "Tool Usage Report",
+          "file": "jobs/analytics/tool-usage-report.json",
+          "description": "Monthly report on which tools are used most/least",
+          "schedule": "Monthly 1st @ 10am UTC",
+          "difficulty": "intermediate",
+          "recommended": false,
+          "requires": ["Session history access"]
+        }
+      ]
+    },
+    {
+      "id": "projects",
+      "name": "Project Health",
+      "description": "Jobs that monitor codebases and deployments",
+      "jobs": [
+        {
+          "id": "project-owner",
+          "name": "Project Owner Template",
+          "file": "jobs/projects/project-owner.json",
+          "description": "Monitor GitHub project health: deployments, PRs, issues, blockers",
+          "schedule": "Every 12 hours",
+          "difficulty": "intermediate",
+          "recommended": true,
+          "template": true,
+          "requires": ["GitHub access", "Deployment platform access"]
+        },
+        {
+          "id": "stalled-work-detector",
+          "name": "Stalled Work Detector",
+          "file": "jobs/projects/stalled-work-detector.json",
+          "description": "Detect projects with no commits in 7+ days",
+          "schedule": "Every 3 days",
+          "difficulty": "intermediate",
+          "recommended": false,
+          "requires": ["Git CLI"]
+        }
+      ]
+    },
+    {
+      "id": "memory",
+      "name": "Memory & Context",
+      "description": "Jobs that maintain memory health and context awareness",
+      "jobs": [
+        {
+          "id": "memory-health-check",
+          "name": "Memory Health Check",
+          "file": "jobs/memory/memory-health-check.json",
+          "description": "Detect stale, contradictory, or duplicate memories",
+          "schedule": "Weekly Saturday @ 10am UTC",
+          "difficulty": "intermediate",
+          "recommended": false,
+          "requires": ["memory_search", "memory_get"]
+        },
+        {
+          "id": "memory-consolidation",
+          "name": "Memory Consolidation",
+          "file": "jobs/memory/memory-consolidation.json",
+          "description": "Review daily logs and suggest MEMORY.md updates",
+          "schedule": "Every 3 days",
+          "difficulty": "intermediate",
+          "recommended": true,
+          "requires": ["memory_search", "memory_get"]
+        },
+        {
+          "id": "context-pruning",
+          "name": "Context Pruning",
+          "file": "jobs/memory/context-pruning.json",
+          "description": "Monthly review to identify and archive outdated context",
+          "schedule": "Monthly 1st @ 11am UTC",
+          "difficulty": "intermediate",
+          "recommended": false,
+          "requires": ["memory_search", "memory_get"]
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "name": "Security & Maintenance",
+      "description": "Jobs that keep your setup secure and healthy",
+      "jobs": [
+        {
+          "id": "security-audit",
+          "name": "Security Audit",
+          "file": "jobs/security/security-audit.json",
+          "description": "Run automated security audit and fix critical issues",
+          "schedule": "Daily",
+          "difficulty": "intermediate",
+          "recommended": true,
+          "requires": ["openclaw security CLI", "Messaging channel"]
+        },
+        {
+          "id": "config-drift-detector",
+          "name": "Config Drift Detector",
+          "file": "jobs/security/config-drift-detector.json",
+          "description": "Detect unexpected changes to gateway configuration",
+          "schedule": "Daily",
+          "difficulty": "advanced",
+          "recommended": false,
+          "requires": ["gateway config.get"]
+        }
+      ]
+    },
+    {
+      "id": "calendar",
+      "name": "Calendar & Awareness",
+      "description": "Jobs that help agent stay aware of time and commitments",
+      "jobs": [
+        {
+          "id": "daily-agenda",
+          "name": "Daily Agenda",
+          "file": "jobs/calendar/daily-agenda.json",
+          "description": "Morning summary of events, deadlines, and tasks",
+          "schedule": "Daily @ 8am local",
+          "difficulty": "intermediate",
+          "recommended": false,
+          "requires": ["Calendar integration (optional)"]
+        },
+        {
+          "id": "deadline-reminder",
+          "name": "Deadline Reminder",
+          "file": "jobs/calendar/deadline-reminder.json",
+          "description": "Alerts for approaching deadlines (3d, 1d, same day)",
+          "schedule": "Every 6 hours",
+          "difficulty": "intermediate",
+          "recommended": false,
+          "requires": ["File system access", "Memory search"]
+        }
+      ]
+    },
+    {
+      "id": "discovery",
+      "name": "Discovery & Growth",
+      "description": "Jobs that help discover new capabilities and patterns",
+      "jobs": [
+        {
+          "id": "tool-discovery",
+          "name": "Tool Discovery",
+          "file": "jobs/discovery/tool-discovery.json",
+          "description": "Introduce one new OpenClaw capability per week",
+          "schedule": "Weekly Wednesday @ 10am UTC",
+          "difficulty": "beginner",
+          "recommended": true,
+          "requires": ["Skills directory access"]
+        },
+        {
+          "id": "skill-learning-prompt",
+          "name": "Skill Learning Prompt",
+          "file": "jobs/discovery/skill-learning-prompt.json",
+          "description": "Bi-weekly deep-dive into available skills and patterns",
+          "schedule": "Bi-weekly (1st & 15th) @ 2pm UTC",
+          "difficulty": "intermediate",
+          "recommended": false,
+          "requires": ["Skills directory access", "Memory write"]
+        }
+      ]
+    }
+  ],
+  "quickStart": [
+    "daily-workflow-feedback",
+    "weekly-reflection",
+    "learning-preference-calibration",
+    "tool-discovery"
+  ],
+  "production": [
+    "security-audit",
+    "config-drift-detector",
+    "project-owner"
+  ],
+  "totalJobs": 18,
+  "lastUpdated": "2026-02-02"
+}

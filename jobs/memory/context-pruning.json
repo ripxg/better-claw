@@ -1,0 +1,57 @@
+{
+  "name": "Context Pruning",
+  "description": "Monthly review to identify and archive outdated context that's no longer relevant",
+  "enabled": false,
+  "schedule": {
+    "kind": "cron",
+    "expr": "0 11 1 * *",
+    "tz": "UTC",
+    "rationale": "First of month - monthly cleanup keeps memory lean"
+  },
+  "sessionTarget": "isolated",
+  "wakeMode": "next-heartbeat",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Monthly context pruning review.\n\nAnalyze MEMORY.md and memory/*.md files for outdated content:\n\n## 🔍 Identify Candidates for Archival\n\n1. **Completed projects** (no longer active)\n   - Project concluded more than 30 days ago\n   - All goals achieved, no ongoing work\n\n2. **Temporary context** (served its purpose)\n   - Event-specific notes (conferences, trips)\n   - Time-bound information (\"try X this month\")\n\n3. **Superseded information**\n   - Old preferences replaced by newer ones\n   - Process notes for deprecated workflows\n   - Tool notes for tools no longer used\n\n4. **Very old daily logs** (90+ days)\n   - Not referenced in recent work\n   - No unique insights worth preserving\n   - Already consolidated into MEMORY.md\n\n## 📋 Report Format\n\n```\n🗂️ Context Pruning - [Month Year]\n\nArchival Candidates: [count]\n\n1. [memory/YYYY-MM-DD.md] - [reason]\n   Size: [KB] | Last referenced: [X days ago]\n   \n2. [MEMORY.md section: \"Project X\"] - [reason]\n   Lines: [range] | Status: completed 45 days ago\n\n...\n\nRecommended Actions:\n- Archive: [count files/sections] → memory/archive/\n- Delete: [count files] (no value)\n- Keep: [count items] (still relevant)\n\nEstimated space savings: [KB]\n```\n\n**Do NOT auto-delete**. Provide recommendations for user approval.\n\nKeep under 1000 chars. Be specific with file paths and line numbers.",
+    "timeoutSeconds": 300,
+    "deliver": false
+  },
+  "isolation": {
+    "postToMainPrefix": "Context Pruning",
+    "postToMainMode": "full"
+  },
+  "configuration": {
+    "schedule": "Monthly recommended. Quarterly (*/3) for slower cleanup.",
+    "age_thresholds": "Default: 30d for projects, 90d for daily logs. Adjust in prompt.",
+    "auto_archive": "Disabled by default. Could create variant that auto-archives.",
+    "delivery": "Main session by default. Enable deliver:true for async review."
+  },
+  "category": "memory",
+  "requiredCapabilities": [
+    "memory_search",
+    "memory_get",
+    "File system read access"
+  ],
+  "estimatedDuration": "3-5 minutes",
+  "recommendedFor": [
+    "Long-term users (90+ days) with accumulating context",
+    "Users experiencing slow memory searches",
+    "Anyone wanting to keep memory focused and relevant"
+  ],
+  "archivalStrategy": {
+    "archive_directory": "memory/archive/YYYY/",
+    "naming": "Original filename preserved",
+    "indexing": "Create memory/archive/INDEX.md with what was archived when",
+    "retrieval": "Archived content still searchable if needed, just not in active memory"
+  },
+  "tips": [
+    "Review suggestions carefully - some 'old' context may still be valuable",
+    "Create memory/archive/ directory before enabling",
+    "Pair with memory-health-check for comprehensive memory maintenance",
+    "Consider archiving vs. deleting - archival preserves searchability"
+  ],
+  "relatedJobs": [
+    "memory-health-check: Detect duplicates and contradictions",
+    "memory-consolidation: Review recent logs for MEMORY.md updates"
+  ]
+}

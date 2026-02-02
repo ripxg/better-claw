@@ -1,0 +1,52 @@
+{
+  "name": "Weekly Session Summary",
+  "description": "Weekly summary of session activity, spawned agents, models used, and estimated costs",
+  "enabled": false,
+  "schedule": {
+    "kind": "cron",
+    "expr": "0 21 * * 0",
+    "tz": "UTC",
+    "rationale": "Sunday evening (9pm) for end-of-week review"
+  },
+  "sessionTarget": "isolated",
+  "wakeMode": "next-heartbeat",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Generate weekly session summary.\n\nAnalyze the past 7 days:\n\n## 📊 Activity Stats\n- Total sessions: [count]\n- Subagents spawned: [count] (success: X, failed: Y)\n- Messages exchanged: [approx count]\n\n## 🤖 Model Usage\n- Sonnet: [% of requests] ([cost estimate])\n- Opus: [% of requests] ([cost estimate])\n- GLM/other: [% of requests] ([cost estimate])\n- **Total estimated cost**: $X.XX\n\n## 🔧 Top Tools Used\n1. [tool name]: [usage count]\n2. [tool name]: [usage count]\n3. [tool name]: [usage count]\n\n## 🎯 Most Active Categories\n- [category]: [activity level]\n- [category]: [activity level]\n\n## 📈 Trends vs Last Week\n- Sessions: [+/- %]\n- Costs: [+/- %]\n- Subagent usage: [+/- %]\n\nProvide insights on optimization opportunities if costs are high.\n\nKeep under 800 chars.",
+    "timeoutSeconds": 180,
+    "deliver": true,
+    "channel": "telegram"
+  },
+  "configuration": {
+    "schedule": "Weekly Sunday. Adjust day to match your review cadence.",
+    "cost_estimation": "Requires API cost tracking or manual rate configuration",
+    "data_source": "Session history logs - may need access to sessions_list",
+    "delivery": "Telegram by default. Change to preferred channel or main session."
+  },
+  "category": "analytics",
+  "requiredCapabilities": [
+    "sessions_list tool",
+    "Session history access",
+    "Cost estimation (manual or integrated)",
+    "Messaging channel (optional)"
+  ],
+  "estimatedDuration": "1-2 minutes",
+  "recommendedFor": [
+    "Cost-conscious users tracking API spend",
+    "Teams monitoring usage patterns",
+    "Power users optimizing workflows"
+  ],
+  "tips": [
+    "Pair with token-usage-daily for daily + weekly coverage",
+    "Use insights to optimize model selection (Opus vs Sonnet vs GLM)",
+    "Track trends over multiple weeks to identify patterns",
+    "Consider setting budget alerts based on weekly costs"
+  ],
+  "metrics": [
+    "Total sessions and messages",
+    "Subagent spawn rate and success ratio",
+    "Model distribution (cost optimization)",
+    "Tool usage patterns",
+    "Week-over-week trends"
+  ]
+}

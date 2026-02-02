@@ -1,0 +1,45 @@
+{
+  "name": "Tool Discovery",
+  "description": "Introduce one new OpenClaw capability or skill per week",
+  "enabled": false,
+  "schedule": {
+    "kind": "cron",
+    "expr": "0 10 * * 3",
+    "tz": "UTC",
+    "rationale": "Wednesday morning provides mid-week learning opportunity"
+  },
+  "sessionTarget": "main",
+  "wakeMode": "next-heartbeat",
+  "payload": {
+    "kind": "systemEvent",
+    "text": "🔍 TOOL DISCOVERY: Weekly capability exploration\n\nPick ONE OpenClaw feature we haven't used much (or at all):\n\n1. Check available skills in ~/.openclaw/skills/ and system skills\n2. Review tool usage in recent session logs\n3. Identify underutilized capabilities\n\nPresent:\n- **Tool/Skill Name**: [name]\n- **What it does**: [1-sentence description]\n- **Why it's useful**: [practical benefit]\n- **Try it now**: [simple example we could do together]\n\nExamples of tools to explore:\n- browser: Web automation and research\n- nodes: Paired device control (phone camera, notifications)\n- canvas: Visual UI presentation\n- message: Cross-platform messaging\n- cron: This very feature!\n- Skills: weather, github, bird (Twitter), etc.\n\nKeep it practical and hands-on. Goal: actually TRY the tool together, not just read about it.\n\nTrack discoveries in memory/tool-discoveries.md to avoid repeats."
+  },
+  "configuration": {
+    "schedule": "Weekly Wednesday. Adjust day and time to preference.",
+    "format": "Interactive discovery - agent presents and you try together",
+    "tracking": "Maintains memory/tool-discoveries.md to track what's been explored",
+    "frequency": "Weekly is good pace. Bi-weekly if you prefer slower learning"
+  },
+  "category": "discovery",
+  "requiredCapabilities": [
+    "Skills directory read access",
+    "Session log analysis",
+    "Memory write access"
+  ],
+  "estimatedDuration": "5-15 minutes (including trying the tool)",
+  "recommendedFor": [
+    "New OpenClaw users learning the platform",
+    "Experienced users wanting to maximize value",
+    "Anyone who hasn't explored skills library"
+  ],
+  "tips": [
+    "Actually try the tool during discovery - don't just read about it",
+    "Keep a running log of discovered tools in memory/",
+    "Share interesting discoveries with the OpenClaw community",
+    "Disable once you've explored all relevant tools"
+  ],
+  "relatedJobs": [
+    "skill-learning-prompt: Deeper dive into skill patterns",
+    "learning-preference-calibration: Adjust how agent adapts to your style"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "name": "Skill Learning Prompt",
+  "description": "Bi-weekly review of available skills to learn new patterns and workflows",
+  "enabled": false,
+  "schedule": {
+    "kind": "cron",
+    "expr": "0 14 1,15 * *",
+    "tz": "UTC",
+    "rationale": "1st and 15th of month (bi-weekly) - steady learning pace without overwhelming"
+  },
+  "sessionTarget": "main",
+  "wakeMode": "next-heartbeat",
+  "payload": {
+    "kind": "systemEvent",
+    "text": "📚 SKILL LEARNING: Bi-weekly skill deep-dive\n\nLet's explore OpenClaw skills in depth.\n\n1. **Scan available skills**\n   - System skills: /home/ubuntu/.bun/lib/node_modules/openclaw/skills/\n   - User skills: ~/.openclaw/skills/\n   - List all SKILL.md files\n\n2. **Pick one skill to master**\n   - Choose one we've used lightly or not at all\n   - Read its full SKILL.md documentation\n   - Understand: purpose, tools, patterns, examples\n\n3. **Interactive learning**\n   - Explain the skill to me in your own words\n   - Identify 2-3 practical use cases for our workflow\n   - Suggest a hands-on exercise to try together\n\n4. **Document learning**\n   - Update memory/skill-learnings.md with:\n     - Skill name and date learned\n     - Key capabilities\n     - When to use it\n     - Example commands/patterns\n\nGoal: Build deep understanding of one skill every two weeks.\n\nPrefer skills that:\n- Solve current pain points\n- Complement our existing workflows\n- Have clear, practical applications\n\nAvoid skills we've already mastered (check memory/skill-learnings.md).\n\nLet's learn together!",
+    "configuration": {
+      "schedule": "Bi-weekly (1st and 15th). Adjust to monthly (expr: 0 14 1 * *) for slower pace.",
+      "format": "Interactive learning session in main chat",
+      "tracking": "Maintains memory/skill-learnings.md to avoid repeats",
+      "depth": "Deep-dive into one skill vs. tool-discovery's broad overview"
+    }
+  },
+  "category": "discovery",
+  "requiredCapabilities": [
+    "Skills directory read access",
+    "Memory write access",
+    "Main session interaction"
+  ],
+  "estimatedDuration": "10-20 minutes (hands-on learning)",
+  "recommendedFor": [
+    "Users wanting to maximize OpenClaw capabilities",
+    "Intermediate users ready to go deeper",
+    "Anyone with specific workflow pain points"
+  ],
+  "tips": [
+    "Actually try the skill during the session - hands-on beats reading",
+    "Focus on skills relevant to your current projects",
+    "Pair with tool-discovery for breadth + depth coverage",
+    "Review memory/skill-learnings.md monthly to reinforce learning"
+  ],
+  "skillCategories": [
+    "External integrations (bird, github, weather)",
+    "Development tools (coding-agent, gemini)",
+    "System utilities (tmux, nano-pdf)",
+    "Creation tools (skill-creator, session-logs)",
+    "Messaging (bluebubbles)"
+  ],
+  "relatedJobs": [
+    "tool-discovery: Weekly intro to new capabilities",
+    "learning-preference-calibration: Adjust learning style monthly"
+  ]
+}

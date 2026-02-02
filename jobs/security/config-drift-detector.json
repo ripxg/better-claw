@@ -1,0 +1,51 @@
+{
+  "name": "Config Drift Detector",
+  "description": "Detect unexpected changes to OpenClaw gateway configuration",
+  "enabled": false,
+  "schedule": {
+    "kind": "every",
+    "everyMs": 86400000,
+    "rationale": "Daily check catches unauthorized config changes quickly"
+  },
+  "sessionTarget": "isolated",
+  "wakeMode": "next-heartbeat",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Check for OpenClaw config drift.\n\n1. Get current config: `gateway config.get`\n2. Compare to baseline (stored in memory/config-baseline.json)\n3. Detect changes in critical sections:\n   - Authentication settings\n   - Channel configurations\n   - Agent permissions\n   - Security settings\n   - Model defaults\n\nIf first run, save current config as baseline.\n\nReport:\n- ✅ No drift detected\n- ⚠️ Expected changes: [list with context]\n- 🚨 Unexpected changes: [list with severity]\n\nFor unexpected changes:\n- What changed\n- When (if detectable)\n- Risk level: Low/Medium/High\n- Suggested action\n\nKeep under 600 chars. Only alert on unexpected changes.",
+    "timeoutSeconds": 120,
+    "deliver": true,
+    "channel": "telegram"
+  },
+  "configuration": {
+    "baseline_location": "Stores baseline in memory/config-baseline.json",
+    "schedule": "Daily recommended for security. Increase to 12h (43200000) for stricter monitoring.",
+    "critical_sections": "Focuses on security-relevant config. Adjust in prompt for other sections.",
+    "alert_threshold": "Only alerts on unexpected changes. Set deliver:false to log all checks."
+  },
+  "category": "security",
+  "requiredCapabilities": [
+    "gateway config.get access",
+    "Memory write access for baseline storage",
+    "Messaging channel for alerts"
+  ],
+  "estimatedDuration": "30-60 seconds",
+  "recommendedFor": [
+    "Production deployments (RECOMMENDED)",
+    "Multi-user OpenClaw instances",
+    "Compliance-required environments",
+    "Anyone concerned about unauthorized changes"
+  ],
+  "detects": [
+    "Unauthorized auth changes",
+    "New channels added/removed",
+    "Permission escalations",
+    "Security setting weakening",
+    "Model/cost setting changes"
+  ],
+  "tips": [
+    "Initialize baseline during stable config state",
+    "Update baseline after intentional config changes",
+    "Pair with security-audit for comprehensive security monitoring",
+    "Review alerts carefully - some drift is expected (plugin updates, etc.)"
+  ]
+}

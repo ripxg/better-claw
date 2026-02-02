@@ -1,0 +1,50 @@
+{
+  "name": "Security Audit",
+  "description": "Run automated security audit and report/fix critical issues",
+  "enabled": false,
+  "schedule": {
+    "kind": "every",
+    "everyMs": 86400000,
+    "rationale": "Daily security checks catch configuration drift and new vulnerabilities"
+  },
+  "sessionTarget": "isolated",
+  "wakeMode": "now",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Review OpenClaw security.\n\nRun: openclaw security audit\n\nFix critical issues immediately. Notify user of:\n- 🔴 Critical: Fixed or requiring manual action\n- 🟡 Warnings: Notable config changes\n- 📢 Suggestions: Security improvements\n\nKeep it under 500 chars. Focus: action items.",
+    "deliver": true,
+    "channel": "telegram",
+    "to": "YOUR_TELEGRAM_ID_OR_PHONE"
+  },
+  "configuration": {
+    "schedule": "Daily is recommended minimum. Increase frequency (43200000 = 12h) for production systems",
+    "delivery": "Change 'channel' and 'to' to your preferred alert method",
+    "auto_fix": "Agent will attempt to fix critical issues automatically. Review behavior before enabling.",
+    "char_limit": "500 char limit ensures concise, actionable alerts"
+  },
+  "category": "security",
+  "requiredCapabilities": [
+    "OpenClaw security CLI access",
+    "Gateway config read/write for fixes",
+    "Messaging channel for alerts"
+  ],
+  "estimatedDuration": "30-120 seconds",
+  "recommendedFor": [
+    "All production deployments (HIGHLY RECOMMENDED)",
+    "Security-conscious users",
+    "Compliance-required environments"
+  ],
+  "securityChecks": [
+    "Exposed secrets in config",
+    "Weak authentication settings",
+    "Unsafe file permissions",
+    "Outdated dependencies with known vulnerabilities",
+    "Insecure channel configurations",
+    "Overly permissive CORS settings"
+  ],
+  "notes": [
+    "This job has permission to modify config to fix critical issues",
+    "Review the openclaw security audit command output manually before enabling auto-fix",
+    "Consider using isolated session to prevent security logs from cluttering main session"
+  ]
+}

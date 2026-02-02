@@ -1,0 +1,61 @@
+{
+  "name": "Project Owner Template",
+  "description": "Monitor a GitHub project's health: deployments, PRs, commits, issues, and blockers",
+  "enabled": false,
+  "schedule": {
+    "kind": "every",
+    "everyMs": 43200000,
+    "rationale": "Every 12 hours provides 2 check-ins per day without being too frequent"
+  },
+  "sessionTarget": "isolated",
+  "wakeMode": "now",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Review PROJECT_NAME (GitHub: GITHUB_OWNER/REPO_NAME, DEPLOYMENT_PLATFORM deployment).\n\nCheck:\n1. Deployment status\n2. Open PRs & recent commits\n3. Issues/blockers\n\nReply with:\n- 🟢 Green: Everything healthy, nothing blocking\n- 🟡 Yellow: Minor issues, needs attention soon\n- 🔴 Red: Critical issue requiring immediate action\n\nThen 2-3 bullet points max:\n- [What needs doing]\n- [What's blocking]\n- [Quick win suggestion]\n\nKeep it under 500 chars. Focus: progress and blockers only.",
+    "deliver": true,
+    "channel": "telegram",
+    "to": "YOUR_TELEGRAM_ID_OR_PHONE"
+  },
+  "configuration": {
+    "customize": "Replace PROJECT_NAME, GITHUB_OWNER/REPO_NAME, DEPLOYMENT_PLATFORM, and YOUR_TELEGRAM_ID",
+    "schedule": "Adjust everyMs for different check-in frequency (21600000 = 6h, 86400000 = 24h)",
+    "delivery": "Change 'channel' to your preferred platform (discord, slack, etc.)",
+    "char_limit": "The 500 char limit prevents overwhelming messages. Increase if needed.",
+    "status_emoji": "🟢🟡🔴 provide at-a-glance health status"
+  },
+  "category": "projects",
+  "requiredCapabilities": [
+    "GitHub access (gh CLI or API)",
+    "Deployment platform access (Vercel/Netlify/etc.)",
+    "Messaging channel"
+  ],
+  "estimatedDuration": "1-3 minutes",
+  "recommendedFor": [
+    "Solo developers managing multiple projects",
+    "Teams wanting automated project health checks",
+    "Maintainers of open source projects"
+  ],
+  "usagePattern": "Clone this job for each project you want to monitor. Rename each with the project name.",
+  "examples": [
+    {
+      "name": "Frontend Project Owner",
+      "customizations": {
+        "PROJECT_NAME": "my-app",
+        "GITHUB_OWNER/REPO_NAME": "myorg/my-app",
+        "DEPLOYMENT_PLATFORM": "Vercel",
+        "everyMs": 21600000,
+        "comment": "6-hour check-ins for active development"
+      }
+    },
+    {
+      "name": "Backend Service Owner",
+      "customizations": {
+        "PROJECT_NAME": "api-service",
+        "GITHUB_OWNER/REPO_NAME": "myorg/api",
+        "DEPLOYMENT_PLATFORM": "Railway",
+        "everyMs": 43200000,
+        "comment": "12-hour check-ins for stable service"
+      }
+    }
+  ]
+}

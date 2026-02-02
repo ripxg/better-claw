@@ -1,0 +1,54 @@
+{
+  "name": "Stalled Work Detector",
+  "description": "Detect projects with no commits in 7+ days and prompt for action",
+  "enabled": false,
+  "schedule": {
+    "kind": "every",
+    "everyMs": 259200000,
+    "rationale": "Every 3 days provides regular check-ins without being annoying"
+  },
+  "sessionTarget": "isolated",
+  "wakeMode": "next-heartbeat",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Check for stalled work across all tracked projects.\n\nFor each Git repository in workspace:\n\n1. Check last commit date on main branch\n2. Check for uncommitted changes (git status)\n3. Check for unmerged branches\n\nReport any project where:\n- ❌ No commits in 7+ days\n- ⚠️ Uncommitted changes exist\n- 🔀 Branches waiting for merge\n\nFor each stalled project:\n- Project name\n- Days since last commit\n- Why it might be stalled (best guess)\n- Suggested next action\n\nFormat:\n```\n🚨 Stalled Projects: [count]\n\n[Project Name] - [X days]\n  Status: [what's blocking]\n  Suggest: [concrete next step]\n\n🟢 Active Projects: [count]\n```\n\nKeep under 800 chars. Focus on actionable insights.",
+    "timeoutSeconds": 180,
+    "deliver": true,
+    "channel": "telegram"
+  },
+  "configuration": {
+    "stalled_threshold": "Default is 7 days. Adjust in the prompt for different sensitivity",
+    "schedule": "Every 3 days. Increase (604800000 = weekly) if it's too frequent",
+    "scope": "Checks all Git repos in workspace. Modify prompt to limit to specific directories",
+    "delivery": "Telegram by default. Only sends when stalled projects found (optional: always send)"
+  },
+  "category": "projects",
+  "requiredCapabilities": [
+    "Git CLI access",
+    "Workspace file system access",
+    "Messaging channel (optional)"
+  ],
+  "estimatedDuration": "1-2 minutes",
+  "recommendedFor": [
+    "Developers juggling multiple projects",
+    "Anyone prone to abandoning half-finished work",
+    "Teams wanting to maintain momentum"
+  ],
+  "tips": [
+    "Pair with project-owner jobs for complete project health monitoring",
+    "Adjust the 7-day threshold based on your typical development cadence",
+    "Consider adding this check to weekly-reflection for manual review"
+  ],
+  "variations": [
+    {
+      "name": "WIP Detector",
+      "description": "Check for branches with 'wip' in name older than 3 days",
+      "threshold": "3 days for WIP branches"
+    },
+    {
+      "name": "PR Reminder",
+      "description": "Check for PRs open longer than 5 days without review",
+      "threshold": "5 days for unreviewed PRs"
+    }
+  ]
+}

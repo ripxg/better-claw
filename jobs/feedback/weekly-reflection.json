@@ -1,0 +1,40 @@
+{
+  "name": "Weekly Reflection",
+  "description": "End-of-week summary of accomplishments, lessons learned, and goals for next week",
+  "enabled": false,
+  "schedule": {
+    "kind": "cron",
+    "expr": "0 18 * * 0",
+    "tz": "UTC",
+    "rationale": "Sunday evening (6pm UTC) provides natural weekly boundary for reflection"
+  },
+  "sessionTarget": "main",
+  "wakeMode": "next-heartbeat",
+  "payload": {
+    "kind": "systemEvent",
+    "text": "REMINDER: Weekly reflection time.\n\nLook back at this week and summarize:\n\n## 🎯 Accomplishments\n- Major tasks completed\n- Problems solved\n- Progress made on ongoing projects\n\n## 📚 Lessons Learned\n- What worked well this week?\n- What didn't work? Why?\n- Any new patterns or insights?\n\n## 🔄 Process Changes\n- Anything to adjust in how we work together?\n- Tools or workflows to adopt/drop?\n- Communication improvements?\n\n## 📅 Next Week\n- Top 3 priorities\n- Blockers to address\n- Goals to aim for\n\n## 📊 Stats\n- Subagents spawned: [count] ([success rate]%)\n- Sessions: [count]\n- Token usage: [total] ([vs. last week])\n\nKeep it focused on signal, not noise. 5-10 minutes max."
+  },
+  "configuration": {
+    "schedule": "Sunday 6pm UTC. Adjust 'tz' and day-of-week (0=Sunday, 6=Saturday) to preference",
+    "depth": "This is a deeper reflection than daily feedback. Allocate 5-10 minutes.",
+    "format": "Customize the sections to match your review process",
+    "frequency": "Weekly is standard. Bi-weekly (*/2 in expr) works for slower-paced workflows"
+  },
+  "category": "feedback",
+  "requiredCapabilities": [
+    "Main session access",
+    "Memory read access for week's context",
+    "Session history for stats"
+  ],
+  "estimatedDuration": "5-10 minutes",
+  "recommendedFor": [
+    "All users who want to improve over time",
+    "Teams doing regular retrospectives",
+    "Anyone managing complex projects"
+  ],
+  "tips": [
+    "Pair with daily-workflow-feedback for continuous improvement loop",
+    "Review this in MEMORY.md monthly to identify longer-term patterns",
+    "Share with team members if working collaboratively"
+  ]
+}
