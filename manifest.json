@@ -25,7 +25,7 @@
           "description": "End-of-week summary of accomplishments, lessons learned, and goals",
           "schedule": "Weekly Sunday @ 6pm UTC",
           "difficulty": "beginner",
-          "recommended": true
+          "recommended": false
         },
         {
           "id": "learning-preference-calibration",
@@ -34,7 +34,7 @@
           "description": "Monthly check-in on how agent should adapt to your communication style",
           "schedule": "Monthly 1st @ 2pm UTC",
           "difficulty": "beginner",
-          "recommended": true
+          "recommended": false
         },
         {
           "id": "communication-audit",

@@ -6,13 +6,13 @@
   <title>Better Claw 🦞 - OpenClaw Cron Job Library</title>
   <style>
     :root {
-      --primary: #FF5A36;
-      --bg: #0a1720;
-      --surface: #0e231f;
-      --text: #c9eadc;
-      --muted: #8ab8aa;
-      --accent: #5fdfa2;
-      --border: #6fbfa8;
+      --primary: #5b8dff;
+      --bg: #1a1f2e;
+      --surface: #252a3d;
+      --text: #e1e4eb;
+      --muted: #9ba3b8;
+      --accent: #7c9cff;
+      --border: #4a5568;
     }
 
     * {
@@ -112,13 +112,30 @@
       margin-bottom: 1rem;
     }
 
-    .quick-start code {
+    .quick-start pre {
       background: var(--bg);
       padding: 1rem;
       border-radius: 6px;
-      display: block;
       overflow-x: auto;
-      margin: 1rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .quick-start code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .quick-start ol {
+      counter-reset: item;
+    }
+
+    .quick-start ol li {
+      margin-bottom: 1.5rem;
+    }
+
+    .quick-start ol li strong {
+      color: var(--accent);
     }
 
     .categories {
@@ -248,18 +265,22 @@
     <div class="quick-start">
       <h2>🚀 Quick Start</h2>
       <p>Get started in 3 easy steps:</p>
-      <code>
-# 1. Clone the repository
-git clone https://github.com/ripxg/better-claw.git
-cd better-claw
-
-# 2. Import recommended starter jobs (all disabled by default)
-./scripts/import-recommended.sh
-
-# 3. Review and enable jobs
-openclaw cron list --include-disabled
-openclaw cron update --job-id &lt;id&gt; --patch '{"enabled": true}'
-      </code>
+      <ol style="margin: 1.5rem 0 1rem 2rem; line-height: 1.8;">
+        <li>
+          <strong>Clone the repository</strong>
+          <pre style="margin-top: 0.5rem;"><code>git clone https://github.com/ripxg/better-claw.git
+cd better-claw</code></pre>
+        </li>
+        <li>
+          <strong>Import recommended starter jobs</strong> (all disabled by default)
+          <pre style="margin-top: 0.5rem;"><code>./scripts/import-recommended.sh</code></pre>
+        </li>
+        <li>
+          <strong>Review and enable jobs</strong>
+          <pre style="margin-top: 0.5rem;"><code>openclaw cron list --include-disabled
+openclaw cron update --job-id &lt;id&gt; --patch '{"enabled": true}'</code></pre>
+        </li>
+      </ol>
       <p style="margin-top: 1rem;">📝 <strong>Note:</strong> All jobs are disabled by default. You choose what to enable.</p>
     </div>
 

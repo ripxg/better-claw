@@ -14,6 +14,17 @@ The best AI agents aren't static—they adapt and improve over time. Better Claw
 - **Discover capabilities** — Gradually explore and adopt new tools and workflows
 - **Respect your time** — Brief, actionable reports that inform without overwhelming
 
+## 🌐 Browse Jobs Online
+
+**NEW:** Visit the [Better Claw Landing Page](https://ripxg.github.io/better-claw/) to browse all available jobs organized by category!
+
+The landing page provides:
+- ✨ Visual catalog of all jobs
+- 📚 Categories and descriptions
+- 🏷️ Difficulty levels and recommendations
+- 🚀 Quick start guide
+- 📦 Direct links to job files
+
 ## Quick Start
 
 **New to Better Claw?** → Read **[INSTALLATION.md](INSTALLATION.md)** for step-by-step setup instructions.
