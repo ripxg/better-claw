@@ -16,11 +16,23 @@ The best AI agents aren't static—they adapt and improve over time. Better Claw
 
 ## Quick Start
 
-1. **Browse the library** — Check the [Job Catalog](#job-catalog) below
-2. **Choose what fits** — All jobs are disabled by default; opt into what you need
-3. **Import jobs** — Use `openclaw cron add` with the job files in `/jobs`
-4. **Customize** — Adjust schedules, prompts, and delivery methods to your preferences
-5. **Iterate** — Enable one or two jobs, see how they work, then add more
+**New to Better Claw?** → Read **[INSTALLATION.md](INSTALLATION.md)** for step-by-step setup instructions.
+
+**TL;DR:**
+```bash
+# 1. Clone the repository
+git clone https://github.com/ripxg/better-claw.git
+cd better-claw
+
+# 2. Import recommended starter jobs (all disabled by default)
+./scripts/import-recommended.sh
+
+# 3. Review and enable jobs
+openclaw cron list --include-disabled
+openclaw cron update --job-id <id> --patch '{"enabled": true}'
+```
+
+That's it! See [INSTALLATION.md](INSTALLATION.md) for detailed instructions, customization options, and troubleshooting.
 
 ## Job Catalog
 
@@ -90,23 +102,18 @@ Jobs that help discover new capabilities and patterns.
 
 ## How to Use
 
-### Import a Job
+**See [INSTALLATION.md](INSTALLATION.md) for complete setup instructions.**
+
+**Quick reference:**
 
 ```bash
-# Copy the job file content
-cat jobs/feedback/daily-workflow-feedback.json
-
-# Add via OpenClaw CLI
+# Import a single job
 openclaw cron add --file jobs/feedback/daily-workflow-feedback.json
 
-# Or use the cron tool in a session
-# (Pass the job object from the file)
-```
+# Import recommended starter jobs
+./scripts/import-recommended.sh
 
-### Enable/Disable Jobs
-
-```bash
-# List all jobs
+# List all jobs (including disabled)
 openclaw cron list --include-disabled
 
 # Enable a job
@@ -114,32 +121,14 @@ openclaw cron update --job-id <id> --patch '{"enabled": true}'
 
 # Disable a job
 openclaw cron update --job-id <id> --patch '{"enabled": false}'
+
+# Customize timezone
+openclaw cron update --job-id <id> --patch '{"schedule": {"tz": "Your/Timezone"}}'
 ```
 
-### Customize Schedules
-
-All jobs use standard cron expressions. Adjust to your timezone and preferences:
-
-```json
-{
-  "schedule": {
-    "kind": "cron",
-    "expr": "0 9 * * *",
-    "tz": "America/New_York"
-  }
-}
-```
-
-Or use interval-based schedules:
-
-```json
-{
-  "schedule": {
-    "kind": "every",
-    "everyMs": 43200000  // 12 hours
-  }
-}
-```
+For detailed examples, customization options, and troubleshooting, see:
+- **[INSTALLATION.md](INSTALLATION.md)** — Step-by-step setup guide
+- **[EXAMPLES.md](EXAMPLES.md)** — Real-world usage patterns
 
 ## Categories Explained
 
