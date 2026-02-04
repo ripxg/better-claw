@@ -8,19 +8,37 @@
     "tz": "UTC",
     "rationale": "Mid-afternoon (3pm UTC) catches end-of-day for Europe, mid-morning for US West Coast"
   },
-  "sessionTarget": "main",
+  "sessionTarget": "isolated",
   "wakeMode": "next-heartbeat",
   "payload": {
-    "kind": "systemEvent",
-    "text": "REMINDER: Daily workflow and communication feedback check.\n\nTake 2-3 minutes to reflect on today:\n\n## What Worked Well\n- What communication patterns felt effective today?\n- Which tasks flowed smoothly?\n\n## What Could Be Better\n- Any friction points or misunderstandings?\n- Times where you had to correct course?\n- Things that took longer than expected?\n\n## Subagent Summary\n- Subagents spawned today:\n  - [Agent name]: [task] → [result: success/failed/in-progress]\n  - ...\n\n## Suggestions\n- What should we do differently tomorrow?\n- Any process improvements to try?\n\nKeep this brief. Focus on patterns, not individual incidents."
+    "kind": "agentTurn",
+    "message": "REMINDER: Daily workflow and communication feedback check.\n\nTake 2-3 minutes to reflect on today:\n\n## What Worked Well\n- What communication patterns felt effective today?\n- Which tasks flowed smoothly?\n\n## What Could Be Better\n- Any friction points or misunderstandings?\n- Times where you had to correct course?\n- Things that took longer than expected?\n\n## Subagent Summary\n- Subagents spawned today:\n  - [Agent name]: [task] → [result: success/failed/in-progress]\n  - ...\n\n## Suggestions\n- What should we do differently tomorrow?\n- Any process improvements to try?\n\nKeep this brief. Focus on patterns, not individual incidents.",
+    "timeoutSeconds": 300,
+    "deliver": true,
+    "channel": "telegram",
+    "to": "YOUR_TELEGRAM_ID_OR_PHONE"
   },
   "configuration": {
     "schedule": "Adjust 'tz' to your local timezone and 'expr' to your preferred time",
     "prompt": "Customize the reflection questions to focus on what matters to you",
-    "delivery": "Uses systemEvent to main session for interactive reflection"
+    "delivery": "Uses isolated session with Telegram delivery for daily check-in",
+    "customize": "Replace YOUR_TELEGRAM_ID_OR_PHONE with your Telegram user ID or phone number",
+    "channel": "Change 'channel' to 'discord', 'slack', 'whatsapp', etc. as needed"
   },
   "category": "feedback",
-  "requiredCapabilities": ["main session access"],
+  "requiredCapabilities": [
+    "Isolated sessions",
+    "Messaging channel (Telegram/Discord/Slack)"
+  ],
   "estimatedDuration": "2-5 minutes",
-  "recommendedFor": ["All users who want to improve agent communication"]
+  "recommendedFor": [
+    "All users who want to improve agent communication",
+    "Teams iterating on workflows",
+    "Solo developers refining their dev process"
+  ],
+  "notes": [
+    "This version uses isolated sessions to keep feedback separate from main work",
+    "Delivers to your messaging channel for easier tracking over time",
+    "Adjust schedule to your preferred reflection time (end of day, morning standup, etc.)"
+  ]
 }

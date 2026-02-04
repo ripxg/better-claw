@@ -4,29 +4,30 @@
   "enabled": false,
   "schedule": {
     "kind": "every",
-    "everyMs": 43200000,
-    "rationale": "Every 12 hours provides 2 check-ins per day without being too frequent"
+    "everyMs": 86400000,
+    "rationale": "Daily check-ins provide consistent visibility without overwhelming noise"
   },
   "sessionTarget": "isolated",
   "wakeMode": "now",
   "payload": {
     "kind": "agentTurn",
-    "message": "Review PROJECT_NAME (GitHub: GITHUB_OWNER/REPO_NAME, DEPLOYMENT_PLATFORM deployment).\n\nCheck:\n1. Deployment status\n2. Open PRs & recent commits\n3. Issues/blockers\n\nReply with:\n- 🟢 Green: Everything healthy, nothing blocking\n- 🟡 Yellow: Minor issues, needs attention soon\n- 🔴 Red: Critical issue requiring immediate action\n\nThen 2-3 bullet points max:\n- [What needs doing]\n- [What's blocking]\n- [Quick win suggestion]\n\nKeep it under 500 chars. Focus: progress and blockers only.",
+    "message": "Review PROJECT_NAME status using `gh` CLI.\n\nRun: gh repo view GITHUB_OWNER/REPO_NAME --json name,description,updatedAt,defaultBranchRef\nRun: gh pr list --repo GITHUB_OWNER/REPO_NAME --state open --limit 5\nRun: gh issue list --repo GITHUB_OWNER/REPO_NAME --state open --limit 5\n\nYour ENTIRE response must be under 400 characters. Be extremely concise.\n\nFormat:\n🟢/🟡/🔴 [Status]\n• [One key point]\n• [One blocker or suggestion]\n\nExample:\n🟢 Healthy\n• Latest deploy successful\n• Consider adding error tracking\n\nDO NOT exceed 400 chars total.",
+    "timeoutSeconds": 300,
     "deliver": true,
     "channel": "telegram",
     "to": "YOUR_TELEGRAM_ID_OR_PHONE"
   },
   "configuration": {
-    "customize": "Replace PROJECT_NAME, GITHUB_OWNER/REPO_NAME, DEPLOYMENT_PLATFORM, and YOUR_TELEGRAM_ID",
-    "schedule": "Adjust everyMs for different check-in frequency (21600000 = 6h, 86400000 = 24h)",
+    "customize": "Replace PROJECT_NAME, GITHUB_OWNER/REPO_NAME, and YOUR_TELEGRAM_ID_OR_PHONE",
+    "schedule": "Adjust everyMs for different check-in frequency (43200000 = 12h, 86400000 = 24h)",
     "delivery": "Change 'channel' to your preferred platform (discord, slack, etc.)",
-    "char_limit": "The 500 char limit prevents overwhelming messages. Increase if needed.",
-    "status_emoji": "🟢🟡🔴 provide at-a-glance health status"
+    "char_limit": "The 400 char limit prevents overwhelming messages. Increase if needed.",
+    "status_emoji": "🟢🟡🔴 provide at-a-glance health status",
+    "gh_cli": "Requires GitHub CLI (gh) installed and authenticated"
   },
   "category": "projects",
   "requiredCapabilities": [
-    "GitHub access (gh CLI or API)",
-    "Deployment platform access (Vercel/Netlify/etc.)",
+    "GitHub CLI (gh) access",
     "Messaging channel"
   ],
   "estimatedDuration": "1-3 minutes",
@@ -38,24 +39,40 @@
   "usagePattern": "Clone this job for each project you want to monitor. Rename each with the project name.",
   "examples": [
     {
-      "name": "Frontend Project Owner",
+      "name": "Bag Hunter Owner",
+      "description": "Monitors bag-hunter project (e-commerce deal finder)",
       "customizations": {
-        "PROJECT_NAME": "my-app",
-        "GITHUB_OWNER/REPO_NAME": "myorg/my-app",
-        "DEPLOYMENT_PLATFORM": "Vercel",
-        "everyMs": 21600000,
-        "comment": "6-hour check-ins for active development"
+        "PROJECT_NAME": "bag-hunter",
+        "GITHUB_OWNER/REPO_NAME": "ripxg/bag-hunter",
+        "everyMs": 86400000,
+        "comment": "Daily check-ins for production app"
       }
     },
     {
-      "name": "Backend Service Owner",
+      "name": "ripXG Blog Owner",
+      "description": "Monitors ripXG-website (personal blog and portfolio)",
+      "customizations": {
+        "PROJECT_NAME": "ripXG-website",
+        "GITHUB_OWNER/REPO_NAME": "ripxg/ripXG-website",
+        "everyMs": 86400000,
+        "comment": "Daily check-ins for blog content and site health"
+      }
+    },
+    {
+      "name": "API Service Owner",
+      "description": "Monitors critical backend API service",
       "customizations": {
         "PROJECT_NAME": "api-service",
         "GITHUB_OWNER/REPO_NAME": "myorg/api",
-        "DEPLOYMENT_PLATFORM": "Railway",
         "everyMs": 43200000,
-        "comment": "12-hour check-ins for stable service"
+        "comment": "12-hour check-ins for high-availability service"
       }
     }
+  ],
+  "notes": [
+    "Uses gh CLI for real-time GitHub data (PRs, issues, commits)",
+    "Concise 400-char format makes daily reports scannable",
+    "Status emoji (🟢🟡🔴) provides instant health visibility",
+    "Isolated session keeps project monitoring separate from main work"
   ]
 }

@@ -11,7 +11,8 @@
   "wakeMode": "now",
   "payload": {
     "kind": "agentTurn",
-    "message": "Review OpenClaw security.\n\nRun: openclaw security audit\n\nFix critical issues immediately. Notify user of:\n- 🔴 Critical: Fixed or requiring manual action\n- 🟡 Warnings: Notable config changes\n- 📢 Suggestions: Security improvements\n\nKeep it under 500 chars. Focus: action items.",
+    "message": "Security audit for clawdbot.\n\nRun: openclaw security audit\n\nYour ENTIRE response must be under 400 characters.\n\nFormat:\n🟢/🟡/🔴 [Status]\n• [Critical issues fixed or requiring action]\n• [Key suggestion]\n\nExample:\n🟢 Secure\n• No critical issues\n• Consider enabling 2FA\n\nDO NOT exceed 400 chars total.",
+    "timeoutSeconds": 300,
     "deliver": true,
     "channel": "telegram",
     "to": "YOUR_TELEGRAM_ID_OR_PHONE"
@@ -19,8 +20,9 @@
   "configuration": {
     "schedule": "Daily is recommended minimum. Increase frequency (43200000 = 12h) for production systems",
     "delivery": "Change 'channel' and 'to' to your preferred alert method",
-    "auto_fix": "Agent will attempt to fix critical issues automatically. Review behavior before enabling.",
-    "char_limit": "500 char limit ensures concise, actionable alerts"
+    "customize": "Replace YOUR_TELEGRAM_ID_OR_PHONE with your Telegram user ID or phone number",
+    "char_limit": "400 char limit ensures concise, scannable alerts",
+    "status_emoji": "🟢🟡🔴 provide at-a-glance security posture"
   },
   "category": "security",
   "requiredCapabilities": [
@@ -28,7 +30,7 @@
     "Gateway config read/write for fixes",
     "Messaging channel for alerts"
   ],
-  "estimatedDuration": "30-120 seconds",
+  "estimatedDuration": "30-180 seconds",
   "recommendedFor": [
     "All production deployments (HIGHLY RECOMMENDED)",
     "Security-conscious users",
@@ -43,8 +45,8 @@
     "Overly permissive CORS settings"
   ],
   "notes": [
-    "This job has permission to modify config to fix critical issues",
-    "Review the openclaw security audit command output manually before enabling auto-fix",
-    "Consider using isolated session to prevent security logs from cluttering main session"
+    "Concise format (400 chars) makes daily security checks easy to scan",
+    "Uses isolated session to prevent security logs from cluttering main session",
+    "Status emoji (🟢🟡🔴) provides instant health check visibility"
   ]
 }
