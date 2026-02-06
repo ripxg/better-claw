@@ -1,0 +1,4 @@
+# Token Usage Register (JSONL)
+# Each line is a JSON object representing one completed session
+# Format: {"timestamp": "ISO8601", "session_key": "...", "agent_id": "...", "model": "...", "tokens_input": 0, "tokens_output": 0, "cost": 0.0}
+{"timestamp":"2026-02-06T00:23:00Z","session_key":"test-session-001","agent_id":"main","model":"anthropic/claude-sonnet-4-5","tokens_input":1000,"tokens_output":500,"cost":0.0075}

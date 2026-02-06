@@ -1,0 +1,127 @@
+# AGENTS.md Session-End Logging Protocol
+
+**Add this section to your AGENTS.md file BEFORE the "Development Rules" section.**
+
+This enables all agents (coordinator + subagents) to log their token usage to a shared register for accurate daily reporting.
+
+---
+
+## 📊 Session-End Token Logging (CRITICAL)
+
+**Every session MUST log token usage before exit** to the shared register for accurate daily reporting.
+
+### When to Log
+- When you receive a final message indicating session end
+- When your task is complete and you're awaiting cleanup
+- Before a long idle period (>1 hour)
+- **Automatically on graceful session termination**
+
+### How to Log
+
+```bash
+# Get session stats from session_status tool
+# Extract: model, tokens_input, tokens_output, cost
+# Then append to register (atomic write):
+
+cat >> /home/ubuntu/clawd/data/token-usage-register.jsonl <<EOF
+{"timestamp":"$(date -u +%Y-%m-%dT%H:%M:%SZ)","session_key":"YOUR_SESSION_KEY","agent_id":"YOUR_AGENT_ID","model":"MODEL_NAME","tokens_input":INPUT_COUNT,"tokens_output":OUTPUT_COUNT,"cost":COST_VALUE}
+EOF
+```
+
+### Example Entry
+```json
+{"timestamp":"2026-02-05T20:00:00Z","session_key":"abc123","agent_id":"backend-engineer","model":"anthropic/claude-sonnet-4-5","tokens_input":15000,"tokens_output":3000,"cost":0.045}
+```
+
+### Register Location
+- **Main workspace**: `/home/ubuntu/clawd/data/token-usage-register.jsonl`
+- **Subagent sandbox**: Same path (accessible from all agents)
+
+### Important Notes
+- **Append-only** — never truncate or overwrite
+- **Atomic writes** — use `>>` or atomic file operations
+- **No duplicates** — check if session_key already logged (optional, but preferred)
+- **JSON Lines format** — one complete JSON object per line
+- **Graceful failure** — if write fails, continue without blocking session end
+
+### Verification
+After logging, you can verify:
+```bash
+tail -1 /home/ubuntu/clawd/data/token-usage-register.jsonl | jq .
+```
+
+### Monthly Cleanup
+The daily report script handles rotation:
+- Archive entries older than 30 days to `token-usage-register-YYYY-MM.jsonl.gz`
+- Keep current month + last month in active register
+
+---
+
+## Alternative: Using Helper Script
+
+For easier logging, use the provided helper script:
+
+```bash
+# Get session stats (example values - replace with actual)
+SESSION_KEY="your-session-key"
+AGENT_ID="your-agent-id"
+MODEL="anthropic/claude-sonnet-4-5"
+TOKENS_INPUT=15000
+TOKENS_OUTPUT=3000
+COST=0.045
+
+# Log to register
+/home/ubuntu/clawd/tools/log-session-tokens.sh \
+  "$SESSION_KEY" "$AGENT_ID" "$MODEL" \
+  "$TOKENS_INPUT" "$TOKENS_OUTPUT" "$COST"
+```
+
+The helper script checks for duplicates and handles atomic writes automatically.
+
+---
+
+## Integration with Session End
+
+**Recommended approach:** Add session-end logging to your workflow:
+
+1. When completing a task or preparing to exit
+2. Run `session_status` to get token counts
+3. Parse the output to extract:
+   - `model`
+   - `tokens_input`
+   - `tokens_output`
+   - `cost` (calculate or extract if available)
+4. Log to register using bash snippet or helper script above
+
+**Example workflow:**
+
+```bash
+# 1. Get session stats
+session_status
+
+# 2. Parse output (simplified - actual parsing may vary)
+# Example output: Model: claude-sonnet-4-5 | Tokens: 15000 in, 3000 out | Cost: $0.045
+
+# 3. Log to register
+./tools/log-session-tokens.sh "session-abc123" "main" "anthropic/claude-sonnet-4-5" 15000 3000 0.045
+
+# 4. Exit or continue
+```
+
+---
+
+## Why This Matters
+
+Without session-end logging:
+- ✗ Daily reports only capture **active** sessions at poll time
+- ✗ Completed sessions are **missed entirely**
+- ✗ Subagent usage is **invisible** if they finish before report runs
+- ✗ Short-lived sessions (&lt;1 hour) are **never counted**
+
+With session-end logging:
+- ✅ **Every session** is captured, regardless of duration
+- ✅ **Subagent usage** is tracked separately by agent_id
+- ✅ **Historical audit trail** for cost analysis
+- ✅ **Accurate reporting** of total token consumption
+
+This is critical for production deployments and cost-conscious teams.

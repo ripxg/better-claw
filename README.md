@@ -62,7 +62,7 @@ Jobs that track resource usage and provide insights.
 
 | Job | Description | Schedule | Requires |
 |-----|-------------|----------|----------|
-| [token-usage-daily](jobs/analytics/token-usage-daily.json) | Daily token usage report with hourly breakdown | Daily @ 8pm | Python script, Telegram |
+| [token-usage-daily](jobs/analytics/token-usage-daily.json) | **v2:** Daily token usage with session-end logging for accurate cross-agent tracking | Daily @ 8pm | Python script, Telegram, AGENTS.md update |
 | [session-summary](jobs/analytics/session-summary.json) | Weekly session activity summary (spawns, models used, costs) | Sunday @ 9pm | Session history |
 | [tool-usage-report](jobs/analytics/tool-usage-report.json) | Monthly report on which tools are used most/least | 1st of month | Session logs |
 

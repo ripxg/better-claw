@@ -54,13 +54,24 @@
       "jobs": [
         {
           "id": "token-usage-daily",
-          "name": "Daily Token Usage Report",
+          "name": "Daily Token Usage Report v2",
           "file": "jobs/analytics/token-usage-daily.json",
-          "description": "Daily token usage report with hourly breakdown and cost estimates",
+          "description": "Session-end logging system for accurate cross-agent token tracking with register-based reporting",
           "schedule": "Daily @ 8pm local",
           "difficulty": "intermediate",
           "recommended": true,
-          "requires": ["Custom Python script", "Messaging channel"]
+          "requires": [
+            "Python scripts (included in scripts/token-logging/)",
+            "AGENTS.md update",
+            "Messaging channel"
+          ],
+          "features": [
+            "Captures completed sessions (not just active)",
+            "Tracks subagent usage separately",
+            "Persistent audit trail",
+            "Automatic deduplication",
+            "Monthly rotation"
+          ]
         },
         {
           "id": "session-summary",
@@ -79,7 +90,9 @@
           "schedule": "Monthly 1st @ 10am UTC",
           "difficulty": "intermediate",
           "recommended": false,
-          "requires": ["Session history access"]
+          "requires": [
+            "Session history access"
+          ]
         }
       ]
     },
@@ -97,7 +110,10 @@
           "difficulty": "intermediate",
           "recommended": true,
           "template": true,
-          "requires": ["GitHub access", "Deployment platform access"]
+          "requires": [
+            "GitHub access",
+            "Deployment platform access"
+          ]
         },
         {
           "id": "stalled-work-detector",
@@ -107,7 +123,9 @@
           "schedule": "Every 3 days",
           "difficulty": "intermediate",
           "recommended": false,
-          "requires": ["Git CLI"]
+          "requires": [
+            "Git CLI"
+          ]
         }
       ]
     },
@@ -124,7 +142,10 @@
           "schedule": "Weekly Saturday @ 10am UTC",
           "difficulty": "intermediate",
           "recommended": false,
-          "requires": ["memory_search", "memory_get"]
+          "requires": [
+            "memory_search",
+            "memory_get"
+          ]
         },
         {
           "id": "memory-consolidation",
@@ -134,7 +155,10 @@
           "schedule": "Every 3 days",
           "difficulty": "intermediate",
           "recommended": true,
-          "requires": ["memory_search", "memory_get"]
+          "requires": [
+            "memory_search",
+            "memory_get"
+          ]
         },
         {
           "id": "context-pruning",
@@ -144,7 +168,10 @@
           "schedule": "Monthly 1st @ 11am UTC",
           "difficulty": "intermediate",
           "recommended": false,
-          "requires": ["memory_search", "memory_get"]
+          "requires": [
+            "memory_search",
+            "memory_get"
+          ]
         }
       ]
     },
@@ -161,7 +188,10 @@
           "schedule": "Daily",
           "difficulty": "intermediate",
           "recommended": true,
-          "requires": ["openclaw security CLI", "Messaging channel"]
+          "requires": [
+            "openclaw security CLI",
+            "Messaging channel"
+          ]
         },
         {
           "id": "config-drift-detector",
@@ -171,7 +201,9 @@
           "schedule": "Daily",
           "difficulty": "advanced",
           "recommended": false,
-          "requires": ["gateway config.get"]
+          "requires": [
+            "gateway config.get"
+          ]
         }
       ]
     },
@@ -188,7 +220,9 @@
           "schedule": "Daily @ 8am local",
           "difficulty": "intermediate",
           "recommended": false,
-          "requires": ["Calendar integration (optional)"]
+          "requires": [
+            "Calendar integration (optional)"
+          ]
         },
         {
           "id": "deadline-reminder",
@@ -198,7 +232,10 @@
           "schedule": "Every 6 hours",
           "difficulty": "intermediate",
           "recommended": false,
-          "requires": ["File system access", "Memory search"]
+          "requires": [
+            "File system access",
+            "Memory search"
+          ]
         }
       ]
     },
@@ -215,7 +252,9 @@
           "schedule": "Weekly Wednesday @ 10am UTC",
           "difficulty": "beginner",
           "recommended": true,
-          "requires": ["Skills directory access"]
+          "requires": [
+            "Skills directory access"
+          ]
         },
         {
           "id": "skill-learning-prompt",
@@ -225,7 +264,10 @@
           "schedule": "Bi-weekly (1st & 15th) @ 2pm UTC",
           "difficulty": "intermediate",
           "recommended": false,
-          "requires": ["Skills directory access", "Memory write"]
+          "requires": [
+            "Skills directory access",
+            "Memory write"
+          ]
         }
       ]
     }

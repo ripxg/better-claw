@@ -1,6 +1,6 @@
 {
-  "name": "Daily Token Usage Report",
-  "description": "Generate daily token usage report with hourly breakdown and cost estimates",
+  "name": "Daily Token Usage Report (v2)",
+  "description": "Comprehensive token usage tracking with session-end logging and register-based reporting for accurate cross-agent usage metrics",
   "enabled": false,
   "schedule": {
     "kind": "cron",
@@ -12,9 +12,11 @@
   "wakeMode": "next-heartbeat",
   "payload": {
     "kind": "agentTurn",
-    "message": "@/home/ubuntu/clawd/tools/daily-token-report.py --send-telegram\n\nGenerate daily token usage report with hourly breakdown for last 24 hours. Send to Telegram.",
+    "message": "@/home/ubuntu/clawd/tools/daily-token-report-v2.py --send-telegram --rotate\n\nGenerate daily token usage report v2 with hourly breakdown for last 24 hours. Includes completed sessions from register + active sessions. Send to Telegram.",
     "timeoutSeconds": 300,
-    "channel": "telegram"
+    "channel": "telegram",
+    "deliver": true,
+    "to": "YOUR_TELEGRAM_ID"
   },
   "isolation": {
     "postToMainPrefix": "Cron",
@@ -23,25 +25,45 @@
   },
   "configuration": {
     "schedule": "Adjust 'tz' to your local timezone and 'expr' to preferred reporting time",
-    "delivery": "Requires Telegram configured. Change 'channel' to 'discord', 'slack', etc. as needed",
-    "script": "Requires daily-token-report.py script in tools directory (not included in this library)",
+    "delivery": "Set 'to' to your Telegram user ID. Change 'channel' to 'discord', 'slack', etc. as needed",
+    "script": "Requires daily-token-report-v2.py and supporting scripts (included in scripts/token-logging/)",
+    "register": "Requires session-end logging in AGENTS.md (see docs/token-logging.md)",
     "customization": "Modify script path and arguments to match your setup"
   },
   "category": "analytics",
   "requiredCapabilities": [
     "Isolated session",
     "Python script access",
-    "Messaging channel (Telegram/Discord/Slack)"
+    "Messaging channel (Telegram/Discord/Slack)",
+    "Session-end logging protocol in AGENTS.md"
   ],
   "estimatedDuration": "30-60 seconds",
   "recommendedFor": [
     "Cost-conscious users",
-    "Teams tracking API usage",
-    "Users optimizing model selection"
+    "Teams tracking API usage across multiple agents",
+    "Users optimizing model selection",
+    "Production deployments requiring audit trails"
+  ],
+  "improvements": [
+    "✅ Captures completed sessions (not just active ones)",
+    "✅ Tracks subagent usage separately",
+    "✅ Deduplicates by session_key to prevent double-counting",
+    "✅ Persistent register for historical analysis",
+    "✅ Automatic monthly rotation of old entries",
+    "✅ Agent breakdown (coordinator vs subagents)"
+  ],
+  "setup": [
+    "1. Copy scripts from scripts/token-logging/ to your workspace tools/ directory",
+    "2. Update AGENTS.md with session-end logging protocol (see docs/token-logging.md)",
+    "3. Sync agent context: ./scripts/sync-agent-context.sh",
+    "4. Import this cron job",
+    "5. Update 'to' field with your Telegram ID",
+    "6. Enable the job"
   ],
   "notes": [
-    "This job references a custom Python script not included in this library",
-    "You'll need to implement your own token tracking script or use OpenClaw's built-in session_status",
-    "Consider creating a simpler version using session_status tool instead of external script"
+    "Requires AGENTS.md update for session-end logging (see docs/token-logging.md)",
+    "Scripts provided in scripts/token-logging/ directory",
+    "Register file created at /home/ubuntu/clawd/data/token-usage-register.jsonl",
+    "Compatible with existing daily-token-report.py (v1) - can run both during transition"
   ]
 }
